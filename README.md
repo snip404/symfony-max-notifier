@@ -3,6 +3,15 @@ Max Notifier
 
 Provides [MAX](https://max.ru) integration for Symfony Notifier.
 
+
+Register as a symfony service
+```yaml
+services:
+  ...
+  Symfony\Component\Notifier\Bridge\Max\MaxTransportFactory:
+    tags: [ texter.transport_factory ]
+```
+
 DSN example
 -----------
 
@@ -186,6 +195,24 @@ $maxOptions = (new MaxOptions())
         ->addRow()
         ->addButton((new KeyboardButton("open symfony"))->link("https://symfony.com"))
     );
+```
+
+Deleting Messages
+-----------------
+When working with interactive callback buttons, you can use the `MaxOptions`
+to reference a previous message to delete.
+
+```php
+use Symfony\Component\Notifier\Bridge\Max\Reply\Markup\Button\InlineKeyboardButton;
+use Symfony\Component\Notifier\Bridge\Max\Reply\Markup\InlineKeyboardMarkup;
+use Symfony\Component\Notifier\Bridge\Max\MaxOptions;
+use Symfony\Component\Notifier\Message\ChatMessage;
+
+$chatMessage = new ChatMessage('Are you really sure?');
+
+$maxOptions = (new MaxOptions())
+    ->chatId($chatId)
+    ->delete($messageId); // extracted from callback payload or SentMessage
 ```
 
 Answering Callback Queries

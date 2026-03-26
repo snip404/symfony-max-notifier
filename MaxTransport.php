@@ -99,16 +99,21 @@ final class MaxTransport extends AbstractTransport
     {
         $method = 'POST';
 
-        if (isset($options['callback_id'])) {
+        if (isset($options['operation']) && $options['operation'] === 'callback') {
             // callback answer https://dev.max.ru/docs-api/methods/POST/answers
             $path = "answers?callback_id={$options['callback_id']}";
             unset($options['callback_id']);
 
-        } elseif (isset($options['message_id'])) {
+        } elseif (isset($options['operation']) && $options['operation'] === 'edit') {
             // edit message https://dev.max.ru/docs-api/methods/PUT/messages
             $method = 'PUT';
             $path = "messages?message_id={$options['message_id']}";
             unset($options['message_id']);
+        } elseif (isset($options['operation']) && $options['operation'] === 'delete') {
+            // edit message https://dev.max.ru/docs-api/methods/DELETE/messages
+            $method = 'DELETE';
+            $path = "messages?message_id={$options['message_id']}";
+            $options = [];
         } else {
             // send message https://dev.max.ru/docs-api/methods/POST/messages
             $path = "messages?{$options['recipient']}={$options['chat_id']}";

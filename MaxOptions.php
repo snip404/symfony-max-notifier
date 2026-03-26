@@ -16,6 +16,7 @@ final class MaxOptions implements MessageOptionsInterface
     public function __construct(
         private array $options = [
             'recipient' => 'chat_id',
+            'operation' => 'send'
         ],
     ) {
     }
@@ -121,6 +122,18 @@ final class MaxOptions implements MessageOptionsInterface
     public function edit(string $messageId): static
     {
         $this->options['message_id'] = $messageId;
+        $this->options['operation'] = 'edit';
+
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    public function delete(string $messageId): static
+    {
+        $this->options['message_id'] = $messageId;
+        $this->options['operation'] = 'delete';
 
         return $this;
     }
@@ -131,6 +144,7 @@ final class MaxOptions implements MessageOptionsInterface
     public function answerCallbackQuery(string $callbackId, ?string $notification = null, int $cacheTime = 0): static
     {
         $this->options['callback_id'] = $callbackId;
+        $this->options['operation'] = 'callback';
         $this->options['notification'] = $notification;
 
         if ($cacheTime > 0) {
