@@ -39,10 +39,6 @@ final class MaxTransportFactory extends AbstractTransportFactory
             throw new IncompleteDsnException('Missing token.', 'max://'.$dsn->getHost());
         }
 
-        if (null === $dsn->getPassword()) {
-            throw new IncompleteDsnException('Malformed token.', 'max://'.$dsn->getHost());
-        }
-
-        return \sprintf('%s:%s', $dsn->getUser(), $dsn->getPassword());
+        return $dsn->getPassword() === null ? $dsn->getUser() : \sprintf('%s:%s', $dsn->getUser(), $dsn->getPassword());
     }
 }
