@@ -51,6 +51,11 @@ final class MaxTransport extends AbstractTransport
             throw new UnsupportedMessageTypeException(__CLASS__, ChatMessage::class, $message);
         }
 
+        $editId = null;
+        if (isset($options['operation']) && isset($options['message_id']) && in_array($options['operation'], ['edit', 'delete'])) {
+            $editId = $options['message_id'];
+        }
+
         $options = $message->getOptions()?->toArray() ?? [];
         $options['chat_id'] ??= $message->getRecipientId() ?: $this->chatChannel;
         $text = $message->getSubject();
@@ -90,6 +95,8 @@ final class MaxTransport extends AbstractTransport
         $sentMessage = new SentMessage($message, (string)$this);
         if (isset($success['message']['body']['mid'])) {
             $sentMessage->setMessageId($success['message']['body']['mid']);
+        } elseif ($editId && $success) {
+            $sentMessage->setMessageId($editId);
         }
 
         return $sentMessage;
