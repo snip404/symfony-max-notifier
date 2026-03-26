@@ -54,7 +54,7 @@ final class MaxTransport extends AbstractTransport
         $options = $message->getOptions()?->toArray() ?? [];
 
         $editId = null;
-        if (isset($options['operation']) && isset($options['message_id']) && in_array($options['operation'], ['edit', 'delete'])) {
+        if (isset($options['operation']) && isset($options['message_id']) && in_array($options['operation'], ['edit'])) {
             $editId = $options['message_id'];
         }
         $options['chat_id'] ??= $message->getRecipientId() ?: $this->chatChannel;
