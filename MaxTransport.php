@@ -104,7 +104,7 @@ final class MaxTransport extends AbstractTransport
             $path = "answers?callback_id={$options['callback_id']}";
             unset($options['callback_id']);
 
-        } elseif ($options['message_id']) {
+        } elseif (isset($options['message_id'])) {
             // edit message https://dev.max.ru/docs-api/methods/PUT/messages
             $method = 'PUT';
             $path = "messages?message_id={$options['message_id']}";
