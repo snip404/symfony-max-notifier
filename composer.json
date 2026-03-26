@@ -1,0 +1,34 @@
+{
+    "name": "snip404/symfony-max-notifier",
+    "type": "symfony-notifier-bridge",
+    "description": "Symfony Max Notifier Bridge",
+    "keywords": ["max", "notifier"],
+    "homepage": "https://github.com/snip404/symfony-max-notifier",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Alexei Cernelevski",
+            "email": "snip404@gmail.com"
+        },
+        {
+            "name": "Symfony Community",
+            "homepage": "https://symfony.com/contributors"
+        }
+    ],
+    "require": {
+        "php": ">=8.2",
+        "symfony/http-client": "^6.4|^7.0",
+        "symfony/mime": "^6.4|^7.0",
+        "symfony/notifier": "^7.2"
+    },
+    "autoload": {
+        "psr-4": { "Symfony\\Component\\Notifier\\Bridge\\Max\\": "" },
+        "exclude-from-classmap": [
+            "/Tests/"
+        ]
+    },
+    "minimum-stability": "dev",
+    "require-dev": {
+        "phpunit/phpunit": "^13.1@dev"
+    }
+}
